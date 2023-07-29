@@ -1,7 +1,6 @@
 package com.example.android_app_shop.View;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +18,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.android_app_shop.Controller.ImageProductHandler;
 import com.example.android_app_shop.Controller.ProductHandlder;
+import com.example.android_app_shop.Model.Cart;
+import com.example.android_app_shop.Model.CartManager;
 import com.example.android_app_shop.Model.ImageProduct;
 import com.example.android_app_shop.Model.PagerImageProductDetail;
 import com.example.android_app_shop.Model.Product;
@@ -45,6 +46,8 @@ public class ProductDetails extends AppCompatActivity {
     ImageProductHandler imageProductHandler;
     ArrayList<Product> productArrayList = new ArrayList<>();
 
+    ArrayList<Product> cartItems = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +68,7 @@ public class ProductDetails extends AppCompatActivity {
         productArrayList = productHandlder.loadProduct();
         addEvent(idProduct);
         showProduct();
+
     }
 
     private void addControls() {
@@ -109,12 +113,25 @@ public class ProductDetails extends AppCompatActivity {
             public void onClick(View view) {
                 Product product = getProductDetails(idProduct);
                 int id = product.getID();
+                // Tạo một đối tượng Cart với các chi tiết cần thiết của sản phẩm đã chọn
+                Cart cart = new Cart();
+                cart.setId(id);
+                cart.setProductName(product.getNameProduct());
+                cart.setProductPrice(product.getPrice());
+                // Đặt số lượng hiện tại là 1, bạn có thể cập nhật nếu cần
+                cart.setValue(1);
+                // Thêm sản phẩm đã chọn vào giỏ hàng bằng CartManager
+                CartManager cartManager = new CartManager(ProductDetails.this);
+                cartManager.addToCart(cart);
+                // Hiển thị thông báo sản phẩm đã được thêm vào giỏ hàng
+                Toast.makeText(ProductDetails.this, "Product added to cart", Toast.LENGTH_SHORT).show();
                 //Sửa activity nhận tại đây
-                Intent intent = new Intent(ProductDetails.this, ProductDetails.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("id", id);
-                intent.putExtras(bundle);
+                Intent intent = new Intent(ProductDetails.this, CartActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("id", id);
+//                intent.putExtras(bundle);
                 startActivity(intent);
+
             }
         });
     }
@@ -205,7 +222,7 @@ public class ProductDetails extends AppCompatActivity {
         product.setColor(color);
         product.setStorage(storage);
         product.setPrice(price);
-        System.out.println(price);
+
 
         for (ImageProduct img : imageURLs) {
             product.addImageURL(img.getURL());
@@ -254,7 +271,16 @@ public class ProductDetails extends AppCompatActivity {
         return null;
     }
 
-
+//    private void addToCart(int idProduct) {
+//        // ...
+//
+//        // Add the selected product to the cart
+//        Cart cart = getCartDetails(idProduct);
+//        cartList.add(cart);
+//
+//        // Save the updated cart items to SharedPreferences
+//        saveCartItems();
+//    }
 
 
 }

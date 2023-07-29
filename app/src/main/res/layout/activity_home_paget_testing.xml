@@ -19,10 +19,15 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-             />
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <Button
             android:id="@+id/btnSend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+        <Button
+            android:id="@+id/btnCart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Button" />

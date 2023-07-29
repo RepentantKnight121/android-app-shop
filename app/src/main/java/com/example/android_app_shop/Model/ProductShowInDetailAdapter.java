@@ -62,6 +62,7 @@ public class ProductShowInDetailAdapter extends BaseAdapter {
         } else {
 //            viewHolder.imgProduct.setImageResource(R.drawable.default_image);
         }
+
         return convertView;
     }
 
@@ -71,4 +72,5 @@ public class ProductShowInDetailAdapter extends BaseAdapter {
         TextView storageProduct;
         TextView priceProduct;
     }
+
 }

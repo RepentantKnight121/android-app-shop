@@ -22,7 +22,7 @@ public class ProductHandlder extends SQLiteOpenHelper {
     private static final String STORAGE_COL = "Storage";
     private static final String PRICE_COL = "Price";
     private static final String ID_CATEGORY_COL = "ID_Brand";
-    public static String path = "/data/data/com.example.android_app_shop/database/SMARTPHONE.db";
+    public static String path = "/data/data/com.example.android_app_shop/database/smartphone.db";
 
     public ProductHandlder(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DB_NAME, factory, DB_VERSION);
@@ -60,7 +60,7 @@ public class ProductHandlder extends SQLiteOpenHelper {
             product.setNameProduct(cursor.getString(2));
             product.setColor(cursor.getString(3));
             product.setStorage(cursor.getInt(4));
-            product.setPrice(cursor.getInt(5));
+            product.setPrice(cursor.getFloat(5));
             lstProduct.add(product);
         }while (cursor.moveToNext());
         cursor.close();
