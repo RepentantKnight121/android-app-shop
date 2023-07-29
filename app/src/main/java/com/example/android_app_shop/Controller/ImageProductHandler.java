@@ -20,7 +20,7 @@ public class ImageProductHandler extends SQLiteOpenHelper {
     private static final String ID_COL = "ID";
     private static final String ID_PRODUCT_COL = "ID_Product";
     private static final String URL_COL = "URL_Image";
-    public static String path = "/data/data/com.example.android_app_shop/database/SMARTPHONE.db";
+    public static String path = "/data/data/com.example.android_app_shop/database/smartphone.db";
 
     public ImageProductHandler(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DB_NAME, factory, DB_VERSION);

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".View.CartActivity">
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="800dp"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+             <ListView
+            android:id="@+id/lstCart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="TouchTargetSizeCheck" />
+            <TextView
+                android:layout_gravity="center"
+                android:id="@+id/tvNotification"
+                android:textSize="15pt"
+                android:text="Giỏ hàng bạn đang trống"
+                android:gravity="center"
+                android:textColor="#2485e2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="65dp"
+        android:background="#e3e3e3"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="1" >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+            <CheckBox
+                android:id="@+id/cbAllProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:text="Tất cả"
+                android:textSize="7pt"
+                tools:ignore="TextSizeCheck" />
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true">
+
+                <Button
+                    android:id="@+id/btnRemove"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:backgroundTint="#FF0000"
+                    android:gravity="center"
+                    android:layout_marginRight="5dp"
+                    android:drawableLeft="@drawable/bin"
+                    android:textStyle="bold"
+                    tools:ignore="ExtraText,SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/tvShowPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:text="Tổng thành toán: đ0"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:textSize="7pt"
+                    tools:ignore="TextSizeCheck" />
+
+                <Button
+                    android:id="@+id/btnPurchase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="65dp"
+                    android:backgroundTint="#FF6347"
+                    android:textStyle="bold"
+                    android:text="Mua Hàng"
+                    tools:ignore="ExtraText,SpeakableTextPresentCheck" />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>
