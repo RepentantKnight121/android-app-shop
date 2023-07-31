@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/menu"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/black"
+        android:paddingTop="10dp">
+
+        <ImageView
+            android:id="@+id/LogoHome"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            app:srcCompat="@drawable/logo_menu" />
+
+        <ImageView
+            android:id="@+id/IconSearch"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/IconCart"
+            app:srcCompat="@drawable/icon_search" />
+
+        <ImageView
+            android:id="@+id/IconCart"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            app:srcCompat="@drawable/cart" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/BrandSmartPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_below="@+id/menu">
+
+        <TextView
+            android:id="@+id/TV_SamSung"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Samsung"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/TV_Iphone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Iphone"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/TV_Realme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Realme"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/TV_Oppo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Oppo"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/TV_Xiaomi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Xiaomi"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/frameFragment"
+        android:layout_width="match_parent"
+        android:layout_marginTop="70dp"
+        android:layout_height="match_parent">
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/inputSearch"
+        android:layout_width="match_parent"
+        android:layout_marginTop="70dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:visibility="gone"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:textColor="@color/black"
+        android:background="@drawable/search_solid"
+        android:hint="Tìm gì đó..."
+        android:textColorHint="@color/black"
+        android:inputType="text" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/solid_top_bottom_nav"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/black" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_nav"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:itemTextColor="@color/black"
+                app:itemIconTint="@color/black"
+                app:itemBackground="@drawable/color_change_bot_nav"
+                app:labelVisibilityMode="labeled"
+                app:menu="@menu/menu_bottom_nav" />
+    </LinearLayout>
+</RelativeLayout>

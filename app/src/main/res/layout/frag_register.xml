@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Frag_Register">
+
+    <LinearLayout
+        android:layout_marginTop="-60dp"
+        android:layout_width="250dp"
+        android:layout_height="340dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/border_radius_background"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:textSize="30dp"
+            android:text="Đăng ký" />
+
+        <EditText
+            android:id="@+id/inputUsername"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="Tên tài khoản" />
+
+        <EditText
+            android:id="@+id/inputPassWord"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="Mật khẩu"/>
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#99DBF5"
+            android:textColor="@color/black"
+            android:text="Đăng ký" />
+
+    </LinearLayout>
+
+</FrameLayout>
