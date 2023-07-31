@@ -34,7 +34,7 @@ import java.util.List;
 
 public class ProductDetails extends AppCompatActivity {
     GridView gridShowProduct;
-    TextView tvNameProduct, tvNameProductSecond, tvPriceProduct;
+    TextView tvNameProduct, tvNameProductSecond, tvPriceProduct, tvNameMenu;
     RadioButton rdo128GB, rdo256GB, rdo512GB, rdo1TB, rdoColor;
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -84,6 +84,7 @@ public class ProductDetails extends AppCompatActivity {
         gridShowProduct = (GridView) findViewById(R.id.gridProduct);
         rdoColor = (RadioButton) findViewById(R.id.color);
         btnPayNow = (Button) findViewById(R.id.btnBuy);
+        tvNameMenu = (TextView) findViewById(R.id.tvNameMenu);
     }
 
     private void addEvent(int idProduct){
@@ -138,6 +139,7 @@ public class ProductDetails extends AppCompatActivity {
 
     private void setNameProduct(String name){
         tvNameProduct.setText(name);
+        tvNameMenu.setText(name);
         tvNameProductSecond.setText(name);
     }
 
@@ -208,7 +210,7 @@ public class ProductDetails extends AppCompatActivity {
 
     private Product getProductDetails(int id) {
         Product pr = productHandlder.getProductById(id);
-        String categoryID = pr.getID_Category();
+//        String categoryID = pr.getID_Category();
         int productID = pr.getID();
         String productName = pr.getNameProduct();
         String color = pr.getColor();
@@ -216,7 +218,7 @@ public class ProductDetails extends AppCompatActivity {
         int storage = pr.getStorage();
         float price = pr.getPrice();
         Product product = new Product();
-        product.setID_Category(categoryID);
+//        product.setID_Category(categoryID);
         product.setID(productID);
         product.setNameProduct(productName);
         product.setColor(color);
@@ -232,7 +234,6 @@ public class ProductDetails extends AppCompatActivity {
 
     private ArrayList<Product> getAllProduct() {
         ArrayList<Product> productList = new ArrayList<>();
-
         for (Product pr : productHandlder.loadProduct()) {
             int productID = pr.getID();
             String productName = pr.getNameProduct();

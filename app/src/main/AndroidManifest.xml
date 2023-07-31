@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:windowSoftInputMode="adjustPan"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -13,10 +12,23 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Androidappshop"
+        android:windowSoftInputMode="adjustPan"
         tools:targetApi="31">
+        <activity
+            android:name=".View.NewsActivity"
+            android:exported="false" />
         <activity
             android:name=".View.TestBuyActivity"
             android:exported="false" />
+        <activity
+            android:name=".View.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".View.CartActivity"
             android:exported="true">
@@ -39,13 +51,7 @@
         </activity>
         <activity
             android:name=".View.HomePageTesting"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>
