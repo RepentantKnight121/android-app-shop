@@ -1,9 +1,8 @@
 package com.example.android_app_shop.View;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.android_app_shop.Controller.AccountHandler;
 import com.example.android_app_shop.R;
@@ -29,6 +31,7 @@ public class FragProfile extends Fragment {
         Button btnChangePassword = view.findViewById(R.id.btnChangePassword);
         EditText inputChangePassWord = view.findViewById(R.id.inputChangePassWord);
         EditText inputChangePassWordAgain = view.findViewById(R.id.inputChangePassWordAgain);
+        Button btnLogOut =  view.findViewById(R.id.btnLogOut);
 
         // Get the data from the Bundle object
         Bundle bundle = getArguments();
@@ -55,10 +58,26 @@ public class FragProfile extends Fragment {
                 }
                 else {
                     accountHandler.ChangePassword(username , PS_change );
+                    inputChangePassWord.setText("");
+                    inputChangePassWordAgain.setText("");
+                    Toast.makeText(getContext(), "Mật khẩu đã được thay đổi !", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.clear(); // Xóa hết thông tin trong SharedPreferences
+                editor.commit();
+                Toast.makeText(getContext(), "Bạn đã đăng xuất thành công !", Toast.LENGTH_SHORT).show();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.frameFragment, new Frag_Login()).commit();
+            }
+        });
         return view;
     }
 }

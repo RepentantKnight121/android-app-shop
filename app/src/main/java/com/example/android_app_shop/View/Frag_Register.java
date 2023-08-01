@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,7 @@ public class Frag_Register extends Fragment {
     Button btnRegister;
     EditText getUsername , getPassword , getPasswordAgain;
 
+    TextView Nav_Login ;
     AccountHandler accountHandler ;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -26,10 +28,18 @@ public class Frag_Register extends Fragment {
         getPassword = view.findViewById(R.id.inputPassWord);
         getPasswordAgain = view.findViewById(R.id.inputPassWordAgain);
         btnRegister = view.findViewById(R.id.btnRegister);
+        Nav_Login = view.findViewById(R.id.Nav_Login);
 
         accountHandler = new AccountHandler( getContext(), "smartphone.db", null, 1);
         accountHandler.initData();
 
+        Nav_Login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.frameFragment, new Frag_Login()).commit();
+            }
+        });
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
