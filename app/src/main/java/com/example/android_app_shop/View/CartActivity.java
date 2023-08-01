@@ -122,8 +122,6 @@ public class CartActivity extends AppCompatActivity {
                 intent.putIntegerArrayListExtra("checkedProductIds", checkedProductIds);
                 intent.putExtra("totalAmount", totalAmount);
                 startActivity(intent);
-
-
             }
         });
     }
