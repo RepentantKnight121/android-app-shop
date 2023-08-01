@@ -3,6 +3,7 @@ package com.example.android_app_shop.View;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,9 +59,9 @@ public class FragProfile extends Fragment {
                 }
                 else {
                     accountHandler.ChangePassword(username , PS_change );
-                    inputChangePassWord.setText("");
-                    inputChangePassWordAgain.setText("");
-                    Toast.makeText(getContext(), "Mật khẩu đã được thay đổi !", Toast.LENGTH_SHORT).show();
+                    Log.d("username" , username);
+                    Log.d("pass" , PS_change);
+                    Toast.makeText(getContext(), "Mật khẩu thay đổi thành công!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -73,7 +74,7 @@ public class FragProfile extends Fragment {
 
                 editor.clear(); // Xóa hết thông tin trong SharedPreferences
                 editor.commit();
-                Toast.makeText(getContext(), "Bạn đã đăng xuất thành công !", Toast.LENGTH_SHORT).show();
+
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.frameFragment, new Frag_Login()).commit();
             }

@@ -55,6 +55,9 @@ public class AccountHandler extends SQLiteOpenHelper {
         // Set the values for the parameters
         statement.bindString(1, newPassword);
         statement.bindString(2, username);
+
+        int rowEffect = statement.executeUpdateDelete();
+        Log.d("Cột ảnh hưởng" , String.valueOf(rowEffect));
     }
 
     public boolean AddAccount(String username, String password) {
