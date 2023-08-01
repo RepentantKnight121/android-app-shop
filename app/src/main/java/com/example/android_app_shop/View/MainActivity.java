@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         // ẩn đi toolbar mặc định
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getSupportActionBar().hide();
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page);
         InitControl();
@@ -116,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
         // Mặc định chọn fragment Home khi mở ứng dụng
         bottomNavigationView.setSelectedItemId(R.id.navigation_home);
     }
+
+
 
     public void InitControl(){
         InputSearch = findViewById(R.id.inputSearch);
