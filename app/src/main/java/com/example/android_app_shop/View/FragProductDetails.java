@@ -168,6 +168,9 @@ public class FragProductDetails extends Fragment {
                 cart.setId(id);
                 cart.setProductName(product.getNameProduct());
                 cart.setProductPrice(product.getPrice());
+                cart.setStorage(product.getStorage());
+                cart.setColor(product.getColor());
+
                 // Đặt số lượng hiện tại là 1, bạn có thể cập nhật nếu cần
                 cart.setValue(1);
                 // Thêm sản phẩm đã chọn vào giỏ hàng bằng CartManager

@@ -14,11 +14,11 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-             <ListView
-            android:id="@+id/lstCart"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:ignore="TouchTargetSizeCheck" />
+            <ListView
+                android:id="@+id/lstCart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:ignore="TouchTargetSizeCheck" />
             <TextView
                 android:layout_gravity="center"
                 android:id="@+id/tvNotification"
@@ -91,7 +91,6 @@
                     android:textStyle="bold"
                     android:text="Mua Hàng"
                     tools:ignore="ExtraText,SpeakableTextPresentCheck" />
-
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

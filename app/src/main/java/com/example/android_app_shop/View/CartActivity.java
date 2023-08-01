@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.util.Printer;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.example.android_app_shop.Model.Cart;
 import com.example.android_app_shop.Model.CartManager;
 import com.example.android_app_shop.Model.CustomAdapterCart;
 import com.example.android_app_shop.Model.ImageProduct;
+import com.example.android_app_shop.Model.Pay;
 import com.example.android_app_shop.Model.Product;
 import com.example.android_app_shop.Model.ProductShowInDetailAdapter;
 import com.example.android_app_shop.R;
@@ -99,23 +101,18 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ArrayList<Integer> checkedProductIds = getCheckedProductIds();
-                ArrayList<Integer> putQuantity = getPutQuantity();
-                // Get the selected products from the adapter
                 List<Cart> selectedProducts = customAdapterCart.getCheckedItems();
-
-                // Calculate the total quantity and total amount of selected products
 
                 double totalAmount = 0;
                 for (Cart cart : selectedProducts) {
                     totalAmount += cart.getProductPrice() * cart.getValue();
                 }
-
-                // Pass the checkedProductIds, totalQuantity, and totalAmount to the PurchaseActivity
-                Intent intent = new Intent(CartActivity.this, TestBuyActivity.class);
+                Intent intent = new Intent(CartActivity.this, PayActivity.class);
                 intent.putIntegerArrayListExtra("checkedProductIds", checkedProductIds);
-                intent.putIntegerArrayListExtra("quantity", putQuantity);
                 intent.putExtra("totalAmount", totalAmount);
                 startActivity(intent);
+
+
             }
         });
     }
@@ -143,7 +140,7 @@ public class CartActivity extends AppCompatActivity {
         // Hiển thị thông báo hoặc ẩn dựa trên danh sách sản phẩm trong giỏ hàng
         if (cartList.isEmpty()) {
             tvNotification.setVisibility(View.VISIBLE);
-            btnRemove.setVisibility(View.VISIBLE);
+            btnRemove.setVisibility(View.GONE);
             lstCart.setVisibility(View.GONE);
         } else {
             tvNotification.setVisibility(View.GONE);
@@ -192,6 +189,7 @@ public class CartActivity extends AppCompatActivity {
                 clearCartSharedPreferences();
                 loadCartItems();
                 Toast.makeText(CartActivity.this, "Đã xóa tất cả các sản phẩm trong giỏ hàng", Toast.LENGTH_SHORT).show();
+                btnRemove.setVisibility(View.GONE);
             }
         });
         builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
@@ -218,12 +216,15 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 removeSelectedItems();
+                btnRemove.setVisibility(View.GONE);
                 Toast.makeText(CartActivity.this, "Đã xóa các sản phẩm được chọn khỏi giỏ hàng", Toast.LENGTH_SHORT).show();
             }
         });
         builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                customAdapterCart.setAllItemsChecked(false);
+                btnRemove.setVisibility(View.GONE);
                 dialog.dismiss();
             }
         });
@@ -244,6 +245,7 @@ public class CartActivity extends AppCompatActivity {
             tvNotification.setVisibility(View.GONE);
             btnRemove.setVisibility(View.GONE);
             lstCart.setVisibility(View.VISIBLE);
+            tvShowPrice.setText("Tổng tiền là: 0đ");
         }
 
         customAdapterCart.notifyDataSetChanged();
