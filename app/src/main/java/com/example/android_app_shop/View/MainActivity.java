@@ -1,19 +1,29 @@
 package com.example.android_app_shop.View;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.android_app_shop.Controller.ProductHandlder;
+import com.example.android_app_shop.Model.Product;
 import com.example.android_app_shop.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     FrameLayout frameFragment;
     ImageView IconSearch ;
     EditText InputSearch;
+
+    ProductHandlder productHandlder;
+    List<Product> productList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // ẩn đi toolbar mặc định
@@ -42,13 +55,34 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (InputSearch.getVisibility() == View.VISIBLE) {
-                    // Ẩn EditText nếu đã hiển thị
+                    InputSearch.setText("");
                     InputSearch.setVisibility(View.GONE);
                 } else {
-                    // Hiển thị EditText nếu đã ẩn
+                    InputSearch.setText("");
                     InputSearch.setVisibility(View.VISIBLE);
                 }
             }
+        });
+
+        InputSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_NEXT) {
+                    String query = textView.getText().toString();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("query", query);
+                    Frag_Search fr = new Frag_Search();
+                    fr.setArguments(bundle);
+                    loadFragment(fr);
+                    InputSearch.setText("");
+                    InputSearch.setVisibility(View.GONE);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
+                    return true;
+                }
+                return false;
+            }
+
         });
 
 
@@ -65,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     loadFragment(new FragFlashSale());
                     return true;
                 }   else if (itemId == R.id.navigation_shop) {
-                    loadFragment(new FragShop());
+                    loadFragment(new ProductPage());
                     return true; // k có true này click item khác k đc
                 }
                 else if (itemId == R.id.navigation_newpaper) {
@@ -85,10 +119,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void InitControl(){
         InputSearch = findViewById(R.id.inputSearch);
-
         bottomNavigationView=(BottomNavigationView) findViewById(R.id.bottom_nav);
         frameFragment=(FrameLayout)findViewById(R.id.frameFragment);
-
         IconSearch = findViewById(R.id.IconSearch);
     }
 }
