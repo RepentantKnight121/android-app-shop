@@ -1,33 +1,28 @@
 package com.example.android_app_shop.Model;
 
-import android.net.Uri;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cart {
+public class Pay {
     List<String> ImageURL;
     int id;
     String productName;
-    double productPrice;
-    boolean isChecked;
-    int value = 1; // Số lượng sản phẩm
     String color;
-    int storage;
+    String storage;
+    double productPrice;
+    int value = 1;
 
-    public Cart(int id, List<String> ImageURL, String productName, double productPrice, boolean isChecked,String color, int storage) {
+    public Pay(int id, List<String> ImageURL, String productName, String color, String storage, double productPrice) {
         this.id = id;
         this.ImageURL = ImageURL;
         this.productName = productName;
-        this.productPrice = productPrice;
-        this.isChecked = isChecked;
-        this.value = 1;
         this.color = color;
         this.storage = storage;
-
+        this.productPrice = productPrice;
+        this.value = 1;
     }
 
-    public Cart(){
+    public Pay(){
         ImageURL = new ArrayList<>();
     }
 
@@ -50,10 +45,25 @@ public class Cart {
     public String getProductName() {
         return productName;
     }
-
     public void setProductName(String productName) {
         this.productName = productName;
     }
+
+    public String getColor() {
+        return color;
+    }
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getStorage() {
+        return storage;
+    }
+    public void setStorage(String storage) {
+        this.storage = storage;
+    }
+
+
 
     public double getProductPrice() {
         return productPrice;
@@ -63,13 +73,7 @@ public class Cart {
         this.productPrice = productPrice;
     }
 
-    public boolean isChecked() {
-        return isChecked;
-    }
 
-    public void setChecked(boolean checked) {
-        isChecked = checked;
-    }
 
     public int getValue() {
         return value;
@@ -82,21 +86,4 @@ public class Cart {
     public void addImageURL(String imageURL) {
         ImageURL.add(imageURL);
     }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public void setStorage(int storage) {
-        this.storage = storage;
-    }
-    public String getColor() {
-        return color;
-    }
-
-    public int getStorage() {
-        return storage;
-    }
-
-
 }

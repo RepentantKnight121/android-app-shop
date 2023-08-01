@@ -25,8 +25,9 @@ private static final String TABLE_NAME = "PRODUCT";
     private static final String URL_COL = "URL_Image";
 
     private static final String NAME_COL = "NameProduct";
-
     private static final String PRICE_COL = "Price";
+    private static final String COLOR_COL = "Color";
+    private static final String STORAGE_COL = "Storage";
     public static String path = "/data/data/com.example.android_app_shop/database/smartphone.db";
 
 
@@ -54,6 +55,8 @@ private static final String TABLE_NAME = "PRODUCT";
             cart = new Cart();
             cart.setProductName(cursor.getString(cursor.getColumnIndex(NAME_COL)));
             cart.setProductPrice((double) cursor.getDouble(cursor.getColumnIndex(PRICE_COL)));
+            cart.setColor(cursor.getString(cursor.getColumnIndex(COLOR_COL)));
+            cart.setStorage(cursor.getInt(cursor.getColumnIndex(STORAGE_COL)));
             cursor.close();
         }
         db.close();

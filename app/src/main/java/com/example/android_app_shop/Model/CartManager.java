@@ -86,4 +86,16 @@ public class CartManager {
         }
         saveCartItems(cartList);
     }
+    public List<Pay> getCart_in_PayItems() {
+        List<Pay> cartList;
+        SharedPreferences preferences = context.getSharedPreferences(CART_PREFERENCES_KEY, Context.MODE_PRIVATE);
+        String cartItemsJson = preferences.getString(CART_ITEMS_KEY, "");
+        if (cartItemsJson.isEmpty()) {
+            cartList = new ArrayList<>();
+        } else {
+            Type cartListType = new TypeToken<List<Pay>>(){}.getType();
+            cartList = new Gson().fromJson(cartItemsJson, cartListType);
+        }
+        return cartList;
+    }
 }
