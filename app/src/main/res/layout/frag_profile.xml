@@ -12,6 +12,7 @@
         android:paddingRight="20dp"
         android:orientation="vertical">
         <TextView
+            android:textColor="@color/black"
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,6 +22,7 @@
             android:text="Thông tin cá nhân" />
 
         <LinearLayout
+            android:layout_marginTop="10dp"
             android:paddingBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -43,6 +45,8 @@
         </LinearLayout>
 
         <LinearLayout
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -104,32 +108,22 @@
 
         <Button
             android:id="@+id/btnChangePassword"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
+            android:backgroundTint="#99DBF5"
             android:text="Thay đổi mật khẩu" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Danh sách đơn hàng"
-                android:textSize="30dp"
-                android:gravity="center"/>
-
-            <ListView
-                android:id="@+id/List_Bill"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/btnLogOut"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:backgroundTint="#99DBF5"
+            android:text="Đăng xuất" />
 
     </LinearLayout>
 
