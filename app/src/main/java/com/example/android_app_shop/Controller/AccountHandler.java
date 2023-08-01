@@ -1,14 +1,11 @@
 package com.example.android_app_shop.Controller;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
-import android.widget.Toast;
-
 
 import androidx.annotation.Nullable;
 
@@ -58,16 +55,6 @@ public class AccountHandler extends SQLiteOpenHelper {
         // Set the values for the parameters
         statement.bindString(1, newPassword);
         statement.bindString(2, username);
-
-        // Execute the update statement
-        int rowsUpdated = statement.executeUpdateDelete();
-        Log.d("CheckRowEffect" , String.valueOf(rowsUpdated));
-//        // Check the number of rows that were updated
-//        if (rowsUpdated > 0) {
-//            Toast.makeText(context, "Đổi mật khẩu thành công!", Toast.LENGTH_SHORT).show();
-//        } else {
-//            Toast.makeText(context, "Đổi mật khẩu thất bại!", Toast.LENGTH_SHORT).show();
-//        }
     }
 
     public boolean AddAccount(String username, String password) {
