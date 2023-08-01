@@ -4,8 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Frag_Register">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_marginTop="-60dp"
@@ -44,6 +43,15 @@
             android:ems="10"
             android:inputType="text"
             android:hint="Mật khẩu"/>
+
+        <EditText
+            android:id="@+id/inputPassWordAgain"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="Nhâ lại mật khẩu"/>
 
         <Button
             android:id="@+id/btnRegister"

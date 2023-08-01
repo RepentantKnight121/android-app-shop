@@ -59,11 +59,11 @@ public class ProductHandlder extends SQLiteOpenHelper {
         cursor.moveToFirst();
         do{
             Product product = new Product();
-            product.setID(cursor.getInt(1));
-            product.setNameProduct(cursor.getString(2));
-            product.setColor(cursor.getString(3));
-            product.setStorage(cursor.getInt(4));
-            product.setPrice(cursor.getFloat(5));
+            product.setID(cursor.getInt(0));
+            product.setNameProduct(cursor.getString(1));
+            product.setColor(cursor.getString(2));
+            product.setStorage(cursor.getInt(3));
+            product.setPrice(cursor.getFloat(4));
             lstProduct.add(product);
         }while (cursor.moveToNext());
         cursor.close();
@@ -75,11 +75,11 @@ public class ProductHandlder extends SQLiteOpenHelper {
         SQLiteDatabase db;
         db= SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.CREATE_IF_NECESSARY);
         onCreate(db);
-        String row1 = "INSERT OR IGNORE INTO " + TABLE_NAME + " (" + ID_COL + ", " + NAME_COL + ", " + COLOR_COL + ", " + STORAGE_COL + ", " + PRICE_COL + ", " + ID_CATEGORY_COL + " ) VALUES (1, 'IPHONE 15', 'white', 256, 1150, 2)";
+        String row1 = "INSERT OR IGNORE INTO " + TABLE_NAME + " (" + ID_COL + ", " + NAME_COL + ", " + COLOR_COL + ", " + STORAGE_COL + ", " + PRICE_COL + ") VALUES (1, 'IPHONE 15', 'white', 256, 1150)";
         db.execSQL(row1);
-        String row2 = "INSERT OR IGNORE INTO " + TABLE_NAME + " (" + ID_COL + ", " + NAME_COL + ", " + COLOR_COL + ", " + STORAGE_COL + ", " + PRICE_COL + ", " + ID_CATEGORY_COL + " ) VALUES (2, 'IPHONE 14', 'yellow', 256, 150, 2)";
+        String row2 = "INSERT OR IGNORE INTO " + TABLE_NAME + " (" + ID_COL + ", " + NAME_COL + ", " + COLOR_COL + ", " + STORAGE_COL + ", " + PRICE_COL + " ) VALUES (2, 'IPHONE 14', 'yellow', 256, 150)";
         db.execSQL(row2);
-        String row3 = "INSERT OR IGNORE INTO " + TABLE_NAME + " (" + ID_COL + ", " + NAME_COL + ", " + COLOR_COL + ", " + STORAGE_COL + ", " + PRICE_COL + ", " + ID_CATEGORY_COL + " ) VALUES (3, 'Iphone XS Max', 'black', 512, 200.000, 2)";
+        String row3 = "INSERT OR IGNORE INTO " + TABLE_NAME + " (" + ID_COL + ", " + NAME_COL + ", " + COLOR_COL + ", " + STORAGE_COL + ", " + PRICE_COL + ") VALUES (3, 'Iphone XS Max', 'black', 512, 200.000)";
         db.execSQL(row3);
     }
 
