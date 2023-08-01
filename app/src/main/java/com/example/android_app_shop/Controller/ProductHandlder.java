@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import com.example.android_app_shop.Model.Product;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductHandlder extends SQLiteOpenHelper {
     public static final String DB_NAME = "SMARTPHONE.db";
@@ -23,6 +24,8 @@ public class ProductHandlder extends SQLiteOpenHelper {
     private static final String PRICE_COL = "Price";
     private static final String ID_CATEGORY_COL = "ID_Brand";
     public static String path = "/data/data/com.example.android_app_shop/database/smartphone.db";
+
+    SQLiteDatabase db;
 
     public ProductHandlder(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DB_NAME, factory, DB_VERSION);
@@ -86,7 +89,6 @@ public class ProductHandlder extends SQLiteOpenHelper {
         Product product = null;
         db = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.CREATE_IF_NECESSARY);
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + ID_COL + " = " + productId, null);
-
         if (cursor != null && cursor.moveToFirst()) {
             product = new Product();
             product.setID(cursor.getInt(cursor.getColumnIndex(ID_COL)));
@@ -94,9 +96,47 @@ public class ProductHandlder extends SQLiteOpenHelper {
             product.setColor(cursor.getString(cursor.getColumnIndex(COLOR_COL)));
             product.setStorage(cursor.getInt(cursor.getColumnIndex(STORAGE_COL)));
             product.setPrice((float) cursor.getDouble(cursor.getColumnIndex(PRICE_COL)));
+//            product.setID_Category(cursor.getString(cursor.getColumnIndex(ID_CATEGORY_COL)));
             cursor.close();
         }
         db.close();
         return product;
+    }
+
+    public void openDatabase() {
+        db = getWritableDatabase();
+    }
+
+    public void closeDatabase() {
+        if (db != null && db.isOpen()) {
+            db.close();
+        }
+    }
+
+    @SuppressLint("Range")
+    public List<Product> searchProducts(String keyword) {
+        List<Product> productList = new ArrayList<>();
+        db = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.CREATE_IF_NECESSARY);
+        Product product = null;
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + NAME_COL + " LIKE '%" + keyword + "%'";
+        Cursor cursor = db.rawQuery(query, null);
+        System.out.println(cursor);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    product = new Product();
+                    product.setID(cursor.getInt(cursor.getColumnIndex(ID_COL)));
+                    product.setNameProduct(cursor.getString(cursor.getColumnIndex(NAME_COL)));
+                    product.setColor(cursor.getString(cursor.getColumnIndex(COLOR_COL)));
+                    product.setStorage(cursor.getInt(cursor.getColumnIndex(STORAGE_COL)));
+                    product.setPrice(cursor.getFloat(cursor.getColumnIndex(PRICE_COL)));
+                    productList.add(product);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+        db.close();
+        return productList;
     }
 }

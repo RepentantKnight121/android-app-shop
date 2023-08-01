@@ -1,6 +1,9 @@
 package com.example.android_app_shop.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,32 +11,28 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.FrameLayout;
 
-import com.example.android_app_shop.Model.Cart;
 import com.example.android_app_shop.R;
-
-import java.util.ArrayList;
 
 public class HomePageTesting extends AppCompatActivity {
 
+    FrameLayout fragLayout;
     EditText edtId;
-    Button btnSend, btnCart;
+    Button btnSend;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_paget_testing);
         addControls();
+        loadFragment(new ProductPage());
         addEvent();
-
-
-
     }
 
     private void addControls(){
         edtId = (EditText) findViewById(R.id.edtId);
         btnSend = (Button) findViewById(R.id.btnSend);
-        btnCart = (Button) findViewById(R.id.btnCart);
+        fragLayout = (FrameLayout) findViewById(R.id.fragLayout);
     }
 
     private void addEvent(){
@@ -47,13 +46,13 @@ public class HomePageTesting extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        btnCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomePageTesting.this, CartActivity.class);
-                startActivity(intent);
-            }
-        });
+    }
+
+    public void loadFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragLayout, fragment);
+        fragmentTransaction.commit();
     }
 
 }

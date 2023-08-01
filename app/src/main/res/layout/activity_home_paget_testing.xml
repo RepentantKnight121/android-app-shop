@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.HomePageTesting">
+    tools:context=".View.HomePageTesting"
+    android:background="#D6D6D6">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,21 +14,23 @@
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp">
 
+        <FrameLayout
+            android:id="@+id/fragLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+
         <EditText
             android:id="@+id/edtId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            tools:ignore="SpeakableTextPresentCheck" />
+             />
 
         <Button
             android:id="@+id/btnSend"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Button" />
-        <Button
-            android:id="@+id/btnCart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Button" />
