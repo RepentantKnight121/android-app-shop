@@ -2,6 +2,7 @@ package com.example.android_app_shop.View;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     FrameLayout frameFragment;
-    ImageView IconSearch ;
+    ImageView IconSearch, IconCart;
     EditText InputSearch;
 
     ProductHandlder productHandlder;
@@ -39,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         // ẩn đi toolbar mặc định
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getSupportActionBar().hide();
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page);
         InitControl();
@@ -115,12 +115,22 @@ public class MainActivity extends AppCompatActivity {
         });
         // Mặc định chọn fragment Home khi mở ứng dụng
         bottomNavigationView.setSelectedItemId(R.id.navigation_home);
+        IconCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
+
 
     public void InitControl(){
         InputSearch = findViewById(R.id.inputSearch);
         bottomNavigationView=(BottomNavigationView) findViewById(R.id.bottom_nav);
         frameFragment=(FrameLayout)findViewById(R.id.frameFragment);
         IconSearch = findViewById(R.id.IconSearch);
+        IconCart =  (ImageView) findViewById(R.id.IconCart);
     }
 }

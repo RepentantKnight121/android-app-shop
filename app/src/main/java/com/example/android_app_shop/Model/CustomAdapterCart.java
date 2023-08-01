@@ -1,12 +1,6 @@
 package com.example.android_app_shop.Model;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.net.Uri;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +9,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AlertDialog;
 
 import com.example.android_app_shop.R;
 import com.example.android_app_shop.View.CartActivity;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -32,12 +21,14 @@ import java.util.List;
 
 public class CustomAdapterCart extends BaseAdapter {
     Context context;
+
     ArrayList<Cart> cartList;
     public boolean[] itemChecked;
     public CustomAdapterCart(Context context, ArrayList<Cart> cartList) {
         this.context = context;
         this.cartList = cartList;
         itemChecked = new boolean[cartList.size()];
+
     }
     @Override
     public int getCount() {
@@ -65,6 +56,7 @@ public class CustomAdapterCart extends BaseAdapter {
             viewHolder.imgCartProduct = convertView.findViewById(R.id.imgCartProduct);
             viewHolder.tvCartProduct = convertView.findViewById(R.id.tvCartProduct);
             viewHolder.tvCartPrice = convertView.findViewById(R.id.tvCartPrice);
+            viewHolder.tvColorAndStorage = convertView.findViewById(R.id.tvColorAndStorage);
             viewHolder.btnValue = convertView.findViewById(R.id.tvValue);
             viewHolder.cbCartItem = convertView.findViewById(R.id.cbCartItem);
             viewHolder.btnMinus = convertView.findViewById(R.id.btnMinus);
@@ -74,8 +66,21 @@ public class CustomAdapterCart extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+
         Cart cart = cartList.get(position);
         viewHolder.tvCartProduct.setText(cart.getProductName());
+        int storage = cart.getStorage();
+        String storageString;
+        if (storage < 1024) {
+            storageString = storage + " GB";
+        } else if (storage == 1024) {
+            storageString = "1 TB";
+        } else {
+            float storageTB = (float) storage / 1024;
+            storageString = String.format("%.1f TB", storageTB);
+        }
+        viewHolder.tvColorAndStorage.setText("Phân loại: màu " +  cart.getColor() + ",\ndung lượng " + storageString);
+
         // Load the image using Picasso
         if (!cart.getImageURL().isEmpty()) {
             Picasso.get().load(cart.getImageURL().get(0)).into(viewHolder.imgCartProduct);
@@ -83,7 +88,6 @@ public class CustomAdapterCart extends BaseAdapter {
 //            viewHolder.imgProduct.setImageResource(R.drawable.default_image);
         }
         viewHolder.btnValue.setText(String.valueOf(cart.getValue()));
-
 
         // Xử lý sự kiện khi nhấn nút "Trừ - Cộng" tổng tiền và các sử lý khác
         viewHolder.btnMinus.setTag(position);
@@ -156,11 +160,12 @@ public class CustomAdapterCart extends BaseAdapter {
     private static class ViewHolder {
         ImageView imgCartProduct;
         TextView tvCartProduct;
-        TextView tvCartPrice;
+        TextView tvCartPrice, tvColorAndStorage;
         TextView btnValue;
         CheckBox cbCartItem;
         Button btnMinus;
         Button btnPlus;
+
     }
     public void setCartList(ArrayList<Cart> newCartList) {
         cartList = newCartList;

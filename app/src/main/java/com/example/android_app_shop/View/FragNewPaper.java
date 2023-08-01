@@ -11,6 +11,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.android_app_shop.Controller.ImageProductHandler;
 import com.example.android_app_shop.Controller.NewHandler;
@@ -127,14 +129,25 @@ public class FragNewPaper extends Fragment {
                     String content = clickedNews.getContent();
                     String image = clickedNews.getImageURL();
                     String date = clickedNews.getDate();
-                    Intent intent = new Intent(getContext(), NewsActivity.class);
+                    FragNewsDetail fragNewsDetail  = new FragNewsDetail();
                     Bundle bundle = new Bundle();
                     bundle.putString("title", title);
                     bundle.putString("content", content);
                     bundle.putString("image", image);
                     bundle.putString("date", date);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                    fragNewsDetail.setArguments(bundle);
+
+                    FragmentManager fragmentManager = getParentFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                    Fragment currentFragment = fragmentManager.findFragmentById(R.id.frameFragment);
+                    if (currentFragment != null) {
+                        fragmentTransaction.hide(currentFragment);
+                    }
+
+                    fragmentTransaction.add(R.id.frameFragment, fragNewsDetail);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
                 }
             }
         });
