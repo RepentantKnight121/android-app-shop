@@ -13,7 +13,7 @@
         android:orientation="vertical">
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="500dp">
             <ListView
                 android:id="@+id/lstCart"
                 android:layout_width="match_parent"
@@ -87,7 +87,7 @@
                     android:id="@+id/btnPurchase"
                     android:layout_width="wrap_content"
                     android:layout_height="65dp"
-                    android:backgroundTint="#FF6347"
+                    android:backgroundTint="#4587ec"
                     android:textStyle="bold"
                     android:text="Mua Hàng"
                     tools:ignore="ExtraText,SpeakableTextPresentCheck" />
