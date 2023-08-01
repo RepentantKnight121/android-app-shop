@@ -81,7 +81,7 @@ public class Frag_Login extends Fragment {
             @Override
             public void onClick(View v) {
                 String username = getUsername.getText().toString();
-                String password = getPassword.getText().toString();
+                String password = String.valueOf(getPassword.getText().toString());
 
                 if (accountHandler.checkUser(username, password)) {
                     Toast.makeText(getContext(), "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
@@ -93,7 +93,7 @@ public class Frag_Login extends Fragment {
                     editor.putString("pw" , password);
                     editor.commit();
 
-                    LoadFragment(username,password ); // truyền vào để nó truyền data này vào fragment được mở lên
+                    LoadFragment(username,password); // truyền vào để nó truyền data này vào fragment được mở lên
 
                 } else {
                     Toast.makeText(getContext(), "Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
