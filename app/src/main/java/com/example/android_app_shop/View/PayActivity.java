@@ -25,6 +25,7 @@ import com.example.android_app_shop.Controller.ProductHandlder;
 import com.example.android_app_shop.Model.Bill;
 import com.example.android_app_shop.Model.Cart;
 import com.example.android_app_shop.Model.CartManager;
+import com.example.android_app_shop.Model.CustomAdapterCart;
 import com.example.android_app_shop.Model.CustomAdapterPay;
 import com.example.android_app_shop.Model.ImageProduct;
 import com.example.android_app_shop.Model.Pay;
@@ -39,6 +40,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class PayActivity extends AppCompatActivity {
+    private boolean isPaymentMethodSelected = false;
     TextView tvTenIphone, tvDungLuong, tvSoLuong, tvMauSac, tvToTal;
     EditText edtHoTen,edtSDT,edtEmail;
 
@@ -53,6 +55,7 @@ public class PayActivity extends AppCompatActivity {
     RadioButton rdoTaiCH, rdoTaiNha,rdoMoMo,rdoVNpay,rdoTienmat;
     String idProduct;
     CartManager cartManager;
+    CustomAdapterCart customAdapterCart;
 
     InPutPayToBillHandler inPutPaytoBill;
 
@@ -85,6 +88,7 @@ public class PayActivity extends AppCompatActivity {
 
     }
     private void addEvents() {
+
         rdoTaiNha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,6 +114,7 @@ public class PayActivity extends AppCompatActivity {
                     rdoTienmat.setChecked(false);
                     rdoVNpay.setChecked(false);
                     showDialogMomo();
+                    isPaymentMethodSelected = true;
                 }
             }
         });
@@ -121,6 +126,7 @@ public class PayActivity extends AppCompatActivity {
                     rdoTienmat.setChecked(false);
                     rdoMoMo.setChecked(false);
                     showDialogVNPAY();
+                    isPaymentMethodSelected = true;
                 }
             }
         });
@@ -131,6 +137,7 @@ public class PayActivity extends AppCompatActivity {
                 if (rdoTienmat.isChecked()) {
                     rdoVNpay.setChecked(false);
                     rdoMoMo.setChecked(false);
+                    isPaymentMethodSelected = true;
                 }
             }
         });
@@ -142,6 +149,22 @@ public class PayActivity extends AppCompatActivity {
                 String email = edtEmail.getText().toString();
                 String phoneNumber = edtSDT.getText().toString();
 
+                // Kiểm tra nếu fullname, email, phoneNumber rỗng
+                if (fullname.trim().isEmpty() || email.trim().isEmpty() || phoneNumber.trim().isEmpty()) {
+                    Toast.makeText(PayActivity.this, "Vui lòng nhập đầy đủ thông tin.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Kiểm tra xem RadioButton đã được chọn chưa
+                if (!rdoTaiNha.isChecked() && !rdoTaiCH.isChecked()) {
+                    Toast.makeText(PayActivity.this, "Vui lòng chọn phương thức nhận hàng.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                // Kiểm tra xem phương thức thanh toán đã được chọn chưa
+                if (!isPaymentMethodSelected) {
+                    Toast.makeText(PayActivity.this, "Vui lòng chọn phương thức thanh toán.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Bill bill;
 
                 try {
@@ -149,10 +172,9 @@ public class PayActivity extends AppCompatActivity {
                         bill = new Bill(1,2,1,fullname,email,phoneNumber,"18/05/2003");
                         inPutPaytoBill.addBill(bill);
                         clearCart();
-                        finish();
-
-
                     }
+                    Intent intent = new Intent(new Intent(PayActivity.this, MainActivity.class));
+                    startActivity(intent);
                     Toast.makeText(PayActivity.this, "Thanh toán thành công", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     Toast.makeText(PayActivity.this, "Thanh toán thất bại!", Toast.LENGTH_SHORT).show();
@@ -232,6 +254,7 @@ public class PayActivity extends AppCompatActivity {
     public void clearCart(){
         cartManager.clearCart();
         loadCartItems();
+
         Toast.makeText(PayActivity.this, "Thanh toán thành công", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(PayActivity.this, CartActivity.class);
         startActivity(intent);
@@ -321,4 +344,6 @@ public class PayActivity extends AppCompatActivity {
         // Hiển thị thông báo hoặc ẩn dựa trên danh sách sản phẩm trong giỏ hàng
 
     }
+
+
 }
