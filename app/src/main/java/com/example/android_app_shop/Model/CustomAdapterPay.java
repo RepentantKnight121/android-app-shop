@@ -68,7 +68,7 @@ public class CustomAdapterPay extends BaseAdapter {
         viewHolder.btnValue.setText(String.valueOf(pay.getValue()));
 
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
-        String formattedPrice = decimalFormat.format(pay.getProductPrice()) +  " đ";
+        String formattedPrice = "$" + decimalFormat.format(pay.getProductPrice());
         viewHolder.tvCartPrice.setText(formattedPrice);
         viewHolder.tvDungLuong.setText(pay.getStorage());
         viewHolder.tvMauSac.setText(pay.getColor());
