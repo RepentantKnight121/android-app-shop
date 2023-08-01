@@ -36,7 +36,6 @@ public class Frag_Login extends Fragment {
         getUsername = view.findViewById(R.id.inputUsername);
         getPassword = view.findViewById(R.id.inputPassWord);
         btnLogin = view.findViewById(R.id.btnLogin);
-
         accountHandler = new AccountHandler( getContext(), "smartphone.db", null, 1);
         accountHandler.initData();
 

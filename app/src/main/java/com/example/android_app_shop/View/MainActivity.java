@@ -95,9 +95,6 @@ public class MainActivity extends AppCompatActivity {
                     // Thay thế fragment tương ứng với FragShop
                     loadFragment(new FragHome());
                     return true;
-                } else if (itemId == R.id.navigation_flashsale) {
-                    loadFragment(new FragFlashSale());
-                    return true;
                 }   else if (itemId == R.id.navigation_shop) {
                     loadFragment(new ProductPage());
                     return true; // k có true này click item khác k đc
