@@ -1,26 +1,34 @@
 package com.example.android_app_shop.View;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android_app_shop.Controller.ImageProductHandler;
+import com.example.android_app_shop.Controller.InPutPayToBillHandler;
 import com.example.android_app_shop.Controller.PayHandler;
+import com.example.android_app_shop.Controller.ProductHandlder;
+import com.example.android_app_shop.Model.Bill;
 import com.example.android_app_shop.Model.Cart;
 import com.example.android_app_shop.Model.CartManager;
 import com.example.android_app_shop.Model.CustomAdapterPay;
 import com.example.android_app_shop.Model.ImageProduct;
 import com.example.android_app_shop.Model.Pay;
+import com.example.android_app_shop.Model.Product;
 import com.example.android_app_shop.R;
 
 import java.text.DecimalFormat;
@@ -37,27 +45,46 @@ public class PayActivity extends AppCompatActivity {
     ImageView imgKq;
     Spinner spnTinhTp, spnQuanHuyen;
     ListView lvKq;
+    Button btnHoanThanh;
 
     ImageProductHandler imageProductHandler;
+    ProductHandlder productHandlder;
     PayHandler cart_in_payHandler;
     RadioButton rdoTaiCH, rdoTaiNha,rdoMoMo,rdoVNpay,rdoTienmat;
+    String idProduct;
+    CartManager cartManager;
 
+    InPutPayToBillHandler inPutPaytoBill;
+
+    ArrayList<Product> productArrayList = new ArrayList<>();
+    ArrayList<Integer> checkedProductIds;
     ArrayList<Pay> payList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay);
+
+        productHandlder = new ProductHandlder(getApplication(), "SMARTPHONE.db", null, 1);
+
+        inPutPaytoBill = new InPutPayToBillHandler(getApplication(), "SMARTPHONE.db", null, 1);
+        inPutPaytoBill.initData();
+        productArrayList = productHandlder.loadProduct();
+        cartManager = new CartManager(this);
         addControls();
         loadCartItems();
         spnClicks();
-        events();
+        addEvents();
         Intent intent = getIntent();
+        checkedProductIds = getIntent().getIntegerArrayListExtra("checkedProductIds");
+        idProduct = String.valueOf(checkedProductIds.get(0));
+
         double totalAmount = intent.getDoubleExtra("totalAmount", 0.0);
         NumberFormat formatter = DecimalFormat.getInstance(new Locale("vi", "VN"));
         String formattedTotalAmount = formatter.format(totalAmount);
-        tvToTal.setText(formattedTotalAmount + "đ");
+        tvToTal.setText( "$" + formattedTotalAmount );
+
     }
-    private void events() {
+    private void addEvents() {
         rdoTaiNha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +109,7 @@ public class PayActivity extends AppCompatActivity {
                 if (rdoMoMo.isChecked()) {
                     rdoTienmat.setChecked(false);
                     rdoVNpay.setChecked(false);
+                    showDialogMomo();
                 }
             }
         });
@@ -92,6 +120,7 @@ public class PayActivity extends AppCompatActivity {
                 if (rdoVNpay.isChecked()) {
                     rdoTienmat.setChecked(false);
                     rdoMoMo.setChecked(false);
+                    showDialogVNPAY();
                 }
             }
         });
@@ -105,9 +134,107 @@ public class PayActivity extends AppCompatActivity {
                 }
             }
         });
+        btnHoanThanh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Retrieve data from EditText fields
+                String fullname = edtHoTen.getText().toString();
+                String email = edtEmail.getText().toString();
+                String phoneNumber = edtSDT.getText().toString();
+
+                Bill bill;
+
+                try {
+                    for (int i = 0; i < checkedProductIds.size(); i++){
+                        bill = new Bill(1,2,1,fullname,email,phoneNumber,"18/05/2003");
+                        inPutPaytoBill.addBill(bill);
+                        clearCart();
+                        finish();
 
 
+                    }
+                    Toast.makeText(PayActivity.this, "Thanh toán thành công", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(PayActivity.this, "Thanh toán thất bại!", Toast.LENGTH_SHORT).show();
+                }
+            }
 
+
+        });
+
+
+    }
+    private void showDialogMomo() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(R.layout.custom_dialog_momo) // Sử dụng layout custom_dialog.xml cho giao diện hộp thoại
+                .setTitle("")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Xử lý sự kiện khi người dùng nhấn nút "OK"
+                        // Ví dụ: lấy dữ liệu từ EditText trong hộp thoại
+//                        String userInput = editText.getText().toString();
+                        // Do something with the user input
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Xử lý sự kiện khi người dùng nhấn nút "Cancel"
+                        dialog.dismiss(); // Đóng hộp thoại
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+    private void showDialogVNPAY() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(R.layout.custom_dialog_vnpay) // Sử dụng layout custom_dialog.xml cho giao diện hộp thoại
+                .setTitle("")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Xử lý sự kiện khi người dùng nhấn nút "OK"
+                        // Ví dụ: lấy dữ liệu từ EditText trong hộp thoại
+//                        String userInput = editText.getText().toString();
+                        // Do something with the user input
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Xử lý sự kiện khi người dùng nhấn nút "Cancel"
+                        dialog.dismiss(); // Đóng hộp thoại
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+    private void addControls() {
+        tvMauSac = (findViewById(R.id.tvMauSac));
+        tvDungLuong = (findViewById(R.id.tvDungLuong));
+        tvToTal = (findViewById(R.id.tvToTal));
+        spnQuanHuyen = findViewById(R.id.spnQuanHuyen);
+        spnTinhTp = findViewById(R.id.spnTinhTp);
+        lvKq = (ListView) findViewById(R.id.lvKq);
+        rdoTaiCH = (RadioButton) findViewById(R.id.rdoNhanTaiCuaHang);
+        rdoTaiNha = (RadioButton) findViewById(R.id.rdoNhanTaiNha);
+        rdoMoMo = (RadioButton) findViewById(R.id.rdoMoMo);
+        rdoVNpay = (RadioButton) findViewById(R.id.rdoVNpay);
+        rdoTienmat = (RadioButton) findViewById(R.id.rdoTienmat);
+        edtHoTen = (EditText) findViewById(R.id.edtHoTen);
+        edtSDT = (EditText) findViewById(R.id.edtSDT);
+        edtEmail = (EditText) findViewById(R.id.edtEmail);
+        btnHoanThanh = (Button) findViewById(R.id.btnHoanThanh);
+    }
+    public void clearCart(){
+        cartManager.clearCart();
+        loadCartItems();
+        Toast.makeText(PayActivity.this, "Thanh toán thành công", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(PayActivity.this, CartActivity.class);
+        startActivity(intent);
     }
     private void spnClicks() {
 
@@ -156,7 +283,7 @@ public class PayActivity extends AppCompatActivity {
                     ArrayList<String> danhSachHuyenTinh = danhSachHuyen.get(selectedTinh);
 
                     ArrayAdapter<String> huyenAdapter = new ArrayAdapter<>(PayActivity.this, android.R.layout.simple_spinner_dropdown_item, danhSachHuyenTinh);
-                    danhSachHuyenTinh.add(0, "Chọn danh sách QUận/Huyện");
+                    danhSachHuyenTinh.add(0, "Chọn danh sách Quận/Huyện");
                     spnQuanHuyen.setSelection(0);
                     spnQuanHuyen.setAdapter(huyenAdapter);
 
@@ -169,20 +296,6 @@ public class PayActivity extends AppCompatActivity {
             }
         });
     }
-    private void addControls() {
-        tvToTal = (findViewById(R.id.tvToTal));
-        spnQuanHuyen = findViewById(R.id.spnQuanHuyen);
-        spnTinhTp = findViewById(R.id.spnTinhTp);
-        lvKq = (ListView) findViewById(R.id.lvKq);
-        rdoTaiCH = (RadioButton) findViewById(R.id.rdoNhanTaiCuaHang);
-        rdoTaiNha = (RadioButton) findViewById(R.id.rdoNhanTaiNha);
-        rdoMoMo = (RadioButton) findViewById(R.id.rdoMoMo);
-        rdoVNpay = (RadioButton) findViewById(R.id.rdoVNpay);
-        rdoTienmat = (RadioButton) findViewById(R.id.rdoTienmat);
-        edtHoTen = (EditText) findViewById(R.id.edtHoTen);
-        edtSDT = (EditText) findViewById(R.id.edtSDT);
-        edtEmail = (EditText) findViewById(R.id.edtEmail);
-    }
     private void loadCartItems() {
         cart_in_payHandler = new PayHandler(this, "SMARTPHONE.db", null, 1);
         if (imageProductHandler == null) {
@@ -190,20 +303,20 @@ public class PayActivity extends AppCompatActivity {
         }
         CartManager cartManager = new CartManager(this);
         payList = (ArrayList<Pay>) cartManager.getCart_in_PayItems();
-        // Tải các hình ảnh cho từng sản phẩm trong giỏ hàng
-        for (Pay cart : payList) {
-            int productId = cart.getId();
+        // Tải các hình ảnh cho từng sản pfm trong giỏ hàng
+        for (Pay pay : payList) {
+            int productId = pay.getId();
 
             // Lấy danh sách URL hình ảnh từ ImageProductHandler dựa vào ID sản phẩm
             List<ImageProduct> imageURLs = imageProductHandler.getListImagesByProductId(productId);
             // Cập nhật danh sách URL hình ảnh cho mỗi sản phẩm trong giỏ hàng
             for (ImageProduct img : imageURLs) {
-                cart.addImageURL(img.getURL());
+                pay.addImageURL(img.getURL());
             }
         }
         // Hiển thị danh sách sản phẩm trong ListView bằng CustomAdapterCart
-        CustomAdapterPay customAdapterPay = new CustomAdapterPay(this, payList);
-        lvKq.setAdapter(customAdapterPay);
+        CustomAdapterPay customCart_in_pay = new CustomAdapterPay(this, payList);
+        lvKq.setAdapter(customCart_in_pay);
 
         // Hiển thị thông báo hoặc ẩn dựa trên danh sách sản phẩm trong giỏ hàng
 

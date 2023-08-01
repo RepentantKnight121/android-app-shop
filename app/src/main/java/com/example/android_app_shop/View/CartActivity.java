@@ -112,16 +112,24 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ArrayList<Integer> checkedProductIds = getCheckedProductIds();
+                ArrayList<Integer> putQuantity = getPutQuantity();
                 List<Cart> selectedProducts = customAdapterCart.getCheckedItems();
 
-                double totalAmount = 0;
-                for (Cart cart : selectedProducts) {
-                    totalAmount += cart.getProductPrice() * cart.getValue();
+                if (selectedProducts.isEmpty()) {
+                    // Hiển thị thông báo lỗi khi không có mục nào được chọn
+                    Toast.makeText(CartActivity.this, "Vui lòng chọn ít nhất một mục sản phẩm để thanh toán.", Toast.LENGTH_SHORT).show();
+                } else {
+                    double totalAmount = 0;
+                    for (Cart cart : selectedProducts) {
+                        totalAmount += cart.getProductPrice() * cart.getValue();
+                    }
+
+                    // Pass the checkedProductIds, totalQuantity, and totalAmount to the PurchaseActivity
+                    Intent intent = new Intent(CartActivity.this, PayActivity.class);
+                    intent.putIntegerArrayListExtra("checkedProductIds", checkedProductIds);
+                    intent.putExtra("totalAmount", totalAmount);
+                    startActivity(intent);
                 }
-                Intent intent = new Intent(CartActivity.this, PayActivity.class);
-                intent.putIntegerArrayListExtra("checkedProductIds", checkedProductIds);
-                intent.putExtra("totalAmount", totalAmount);
-                startActivity(intent);
             }
         });
     }
@@ -180,7 +188,7 @@ public class CartActivity extends AppCompatActivity {
         // Tạo một đối tượng DecimalFormat để định dạng số thành chuỗi
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         // Chuyển đổi tổng tiền thành chuỗi với định dạng đầy đủ (có dấu phẩy)
-        String formattedTotalAmount = "Tổng tiền là: " + decimalFormat.format(totalAmount) + " đ";
+        String formattedTotalAmount = "Tổng tiền là: $" + decimalFormat.format(totalAmount) ;
         // Hiển thị tổng tiền lên TextView tvShowPrice
         tvShowPrice.setText(formattedTotalAmount);
     }

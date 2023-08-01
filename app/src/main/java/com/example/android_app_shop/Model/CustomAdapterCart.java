@@ -93,7 +93,7 @@ public class CustomAdapterCart extends BaseAdapter {
         viewHolder.btnMinus.setTag(position);
         viewHolder.btnPlus.setTag(position);
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
-        String formattedPrice = decimalFormat.format(cart.getProductPrice()) +  " đ";
+        String formattedPrice =  "$"+decimalFormat.format(cart.getProductPrice()) ;
         viewHolder.tvCartPrice.setText(formattedPrice);
         viewHolder.btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override

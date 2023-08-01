@@ -1,0 +1,25 @@
+<!-- custom_dialog.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Add your custom UI elements here -->
+    <TextView
+        android:id="@+id/dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Momo"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:paddingBottom="8dp"
+        android:textAlignment="center"/>
+
+    <ImageView
+        android:background="@drawable/momopay"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"/>
+
+</LinearLayout>
