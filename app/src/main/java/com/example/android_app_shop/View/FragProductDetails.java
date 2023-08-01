@@ -3,8 +3,15 @@ package com.example.android_app_shop.View;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
+
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
@@ -12,9 +19,6 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
 
 import com.example.android_app_shop.Controller.ImageProductHandler;
 import com.example.android_app_shop.Controller.ProductHandlder;
@@ -32,7 +36,13 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDetails extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link FragProductDetails#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class FragProductDetails extends Fragment {
+
     GridView gridShowProduct;
     TextView tvNameProduct, tvNameProductSecond, tvPriceProduct, tvNameMenu;
     RadioButton rdo128GB, rdo256GB, rdo512GB, rdo1TB, rdoColor;
@@ -48,44 +58,79 @@ public class ProductDetails extends AppCompatActivity {
 
     ArrayList<Product> cartItems = new ArrayList<>();
 
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    public FragProductDetails() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment Frag_ProductDetails.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static FragProductDetails newInstance(String param1, String param2) {
+        FragProductDetails fragment = new FragProductDetails();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_details);
-        addControls();
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-
-        // nhận id product từ đây
-        int idProduct = bundle.getInt("id", 0);
-        //Nếu chưa được gửi id
-//        int idProduct = 1;
-
-        productHandlder = new ProductHandlder(getApplicationContext(), "SMARTPHONE.db", null, 1);
-        imageProductHandler = new ImageProductHandler(getApplicationContext(), "SMARTPHONE.db", null, 1);
-        imageProductHandler.initData();
-        productHandlder.initData();
-        productArrayList = productHandlder.loadProduct();
-        addEvent(idProduct);
-        showProduct();
-
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
     }
 
-    private void addControls() {
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        rdo128GB = (RadioButton) findViewById(R.id.rdo128);
-        rdo256GB = (RadioButton) findViewById(R.id.rdo256);
-        rdo512GB = (RadioButton) findViewById(R.id.rdo512);
-        rdo1TB = (RadioButton) findViewById(R.id.rdo1tb);
-        tvNameProduct = (TextView) findViewById(R.id.tvNameProduct);
-        tvNameProductSecond = (TextView) findViewById(R.id.tvNameProductSecond);
-        tvPriceProduct = (TextView) findViewById(R.id.tvPriceProduct);
-        gridShowProduct = (GridView) findViewById(R.id.gridProduct);
-        rdoColor = (RadioButton) findViewById(R.id.color);
-        btnPayNow = (Button) findViewById(R.id.btnBuy);
-        tvNameMenu = (TextView) findViewById(R.id.tvNameMenu);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState)
+    {
+        View view = inflater.inflate(R.layout.fragment_frag__product_details, container, false);
+        tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
+        viewPager = (ViewPager) view.findViewById(R.id.pager);
+        rdo128GB = (RadioButton) view.findViewById(R.id.rdo128);
+        rdo256GB = (RadioButton) view.findViewById(R.id.rdo256);
+        rdo512GB = (RadioButton) view.findViewById(R.id.rdo512);
+        rdo1TB = (RadioButton) view.findViewById(R.id.rdo1tb);
+        tvNameProduct = (TextView) view.findViewById(R.id.tvNameProduct);
+        tvNameProductSecond = (TextView) view.findViewById(R.id.tvNameProductSecond);
+        tvPriceProduct = (TextView) view.findViewById(R.id.tvPriceProduct);
+        gridShowProduct = (GridView) view.findViewById(R.id.gridProduct);
+        rdoColor = (RadioButton) view.findViewById(R.id.color);
+        btnPayNow = (Button) view.findViewById(R.id.btnBuy);
+        tvNameMenu = (TextView) view.findViewById(R.id.tvNameMenu);
+        if(getArguments()!= null){
+            int idProduct = getArguments().getInt("id");
+            productHandlder = new ProductHandlder(getContext(), "SMARTPHONE.db", null, 1);
+            imageProductHandler = new ImageProductHandler(getContext(), "SMARTPHONE.db", null, 1);
+            imageProductHandler.initData();
+            productHandlder.initData();
+            productArrayList = productHandlder.loadProduct();
+            addEvent(idProduct);
+            showProduct();
+        }
+
+
+        return view;
     }
+
 
     private void addEvent(int idProduct){
         Product product = getProductDetails(idProduct);
@@ -101,11 +146,15 @@ public class ProductDetails extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Product product = (Product) adapterGrid.getItem(i);
                 int id = product.getID();
-                Intent intent = new Intent(ProductDetails.this, ProductDetails.class);
+                FragProductDetails frag_productDetails = new FragProductDetails();
                 Bundle bundle = new Bundle();
                 bundle.putInt("id", id);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                frag_productDetails.setArguments(bundle);
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameFragment, frag_productDetails);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 
@@ -122,12 +171,12 @@ public class ProductDetails extends AppCompatActivity {
                 // Đặt số lượng hiện tại là 1, bạn có thể cập nhật nếu cần
                 cart.setValue(1);
                 // Thêm sản phẩm đã chọn vào giỏ hàng bằng CartManager
-                CartManager cartManager = new CartManager(ProductDetails.this);
+                CartManager cartManager = new CartManager(getContext());
                 cartManager.addToCart(cart);
                 // Hiển thị thông báo sản phẩm đã được thêm vào giỏ hàng
-                Toast.makeText(ProductDetails.this, "Product added to cart", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Product added to cart", Toast.LENGTH_SHORT).show();
                 //Sửa activity nhận tại đây
-                Intent intent = new Intent(ProductDetails.this, CartActivity.class);
+                Intent intent = new Intent(getContext(), CartActivity.class);
 //                Bundle bundle = new Bundle();
 //                bundle.putInt("id", id);
 //                intent.putExtras(bundle);
@@ -136,18 +185,14 @@ public class ProductDetails extends AppCompatActivity {
             }
         });
     }
-
     private void setNameProduct(String name){
         tvNameProduct.setText(name);
         tvNameMenu.setText(name);
         tvNameProductSecond.setText(name);
     }
-
     private void setPriceProduct(String price){
-
         tvPriceProduct.setText(price + "đ");
     }
-
     private void setColorProduct(String color) {
         int backgroundColor;
         try {
@@ -159,13 +204,10 @@ public class ProductDetails extends AppCompatActivity {
         }
         rdoColor.setBackgroundColor(backgroundColor);
     }
-
-
     private void setupViewPager(List<String> listImgProduct) {
-        adapterPager = new PagerImageProductDetail(this, listImgProduct);
+        adapterPager = new PagerImageProductDetail(getContext(), listImgProduct);
         viewPager.setAdapter(adapterPager);
     }
-
     private void setupTabLayout(List<String> listImgProduct) {
         tabLayout.setupWithViewPager(viewPager);
         for (int i = 0; i < listImgProduct.size(); i++) {
@@ -177,7 +219,7 @@ public class ProductDetails extends AppCompatActivity {
     }
 
     private View createTabView(int position,List<String> listImgProduct ) {
-        View tabView = LayoutInflater.from(this).inflate(R.layout.tab_layout_product_detail, null);
+        View tabView = LayoutInflater.from(getContext()).inflate(R.layout.tab_layout_product_detail, null);
         ImageView tabImage = tabView.findViewById(R.id.tabImage);
         Picasso.get().load(listImgProduct.get(position)).into(tabImage);
         return tabView;
@@ -258,9 +300,9 @@ public class ProductDetails extends AppCompatActivity {
     }
 
     private void showProduct() {
-            ArrayList<Product> productList = getAllProduct();
-            adapterGrid = new ProductShowInDetailAdapter(ProductDetails.this, productList);
-            gridShowProduct.setAdapter(adapterGrid);
+        ArrayList<Product> productList = getAllProduct();
+        adapterGrid = new ProductShowInDetailAdapter(getContext(), productList);
+        gridShowProduct.setAdapter(adapterGrid);
     }
 
     private Product findProduct (int id, ArrayList<Product> lstProduct){
@@ -271,17 +313,5 @@ public class ProductDetails extends AppCompatActivity {
         }
         return null;
     }
-
-//    private void addToCart(int idProduct) {
-//        // ...
-//
-//        // Add the selected product to the cart
-//        Cart cart = getCartDetails(idProduct);
-//        cartList.add(cart);
-//
-//        // Save the updated cart items to SharedPreferences
-//        saveCartItems();
-//    }
-
 
 }

@@ -41,61 +41,6 @@
             app:srcCompat="@drawable/cart" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/BrandSmartPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:layout_below="@+id/menu">
-
-        <TextView
-            android:id="@+id/TV_SamSung"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Samsung"
-            android:textSize="16dp" />
-
-        <TextView
-            android:id="@+id/TV_Iphone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Iphone"
-            android:textSize="16dp" />
-
-        <TextView
-            android:id="@+id/TV_Realme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Realme"
-            android:textSize="16dp" />
-
-        <TextView
-            android:id="@+id/TV_Oppo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Oppo"
-            android:textSize="16dp" />
-
-        <TextView
-            android:id="@+id/TV_Xiaomi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Xiaomi"
-            android:textSize="16dp" />
-    </LinearLayout>
-
     <FrameLayout
         android:id="@+id/frameFragment"
         android:layout_width="match_parent"

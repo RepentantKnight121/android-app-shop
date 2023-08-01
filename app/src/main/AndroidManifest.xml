@@ -15,7 +15,7 @@
         android:windowSoftInputMode="adjustPan"
         tools:targetApi="31">
         <activity
-            android:name=".View.NewsActivity"
+            android:name=".FragNewDetail"
             android:exported="false" />
         <activity
             android:name=".View.TestBuyActivity"
@@ -38,20 +38,6 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity
-            android:name=".View.ProductDetails"
-            android:exported="true">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
-        <activity
-            android:name=".View.HomePageTesting"
-            android:exported="true" />
     </application>
 
 </manifest>
