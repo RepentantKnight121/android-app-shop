@@ -61,7 +61,7 @@ public class ImageProductHandler extends SQLiteOpenHelper {
         db.execSQL(row6);
         String row7 = "INSERT OR IGNORE INTO " + TABLE_NAME + " (" + ID_COL + ", " + URL_COL + ", " + ID_PRODUCT_COL + ") VALUES (7, 'https://economictimes.indiatimes.com/thumb/msid-94341230,width-1200,height-900,resizemode-4,imgsize-16180/iphone-15.jpg?from=mdr', 1)";
         db.execSQL(row7);
-        String row8 = "INSERT OR IGNORE INTO " + TABLE_NAME + " (" + ID_COL + ", " + URL_COL + ", " + ID_PRODUCT_COL + ") VALUES (8, 'https://cdn.mos.cms.futurecdn.net/tFrwgeZw6gjTLKfnGQBGq9.jpg', 1)";
+        String row8 = "INSERT OR IGNORE INTO " + TABLE_NAME + " (" + ID_COL + ", " + URL_COL + ", " + ID_PRODUCT_COL + ") VALUES (8, 'https://i0.wp.com/www.smartprix.com/bytes/wp-content/uploads/2022/12/iphone-15-to-come-with-this-major-design-update-new-leaks-reveal-titanium-frame.webp?ssl=1', 1)";
         db.execSQL(row8);
     }
 
