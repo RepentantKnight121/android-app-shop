@@ -4,62 +4,44 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.android_app_shop.Controller.ImageProductHandler;
+import com.example.android_app_shop.Controller.ProductHandlder;
+import com.example.android_app_shop.Model.PagerImageProductDetail;
+import com.example.android_app_shop.Model.Product;
+import com.example.android_app_shop.Model.ProductShowInDetailAdapter;
 import com.example.android_app_shop.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragHome#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
 public class FragHome extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public FragHome() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragHome.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragHome newInstance(String param1, String param2) {
-        FragHome fragment = new FragHome();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    GridView ListProductHomePage;
+    ProductShowInDetailAdapter adapterGrid;
+    ProductHandlder productHandlder;
+    ImageProductHandler imageProductHandler;
+    ArrayList<Product> productArrayList = new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        productHandlder = new ProductHandlder(getContext(), "SMARTPHONE.db", null, 1);
+        imageProductHandler = new ImageProductHandler(getContext(), "SMARTPHONE.db", null, 1);
+        imageProductHandler.initData();
+        productHandlder.initData();
+        productArrayList = productHandlder.loadProduct();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.frag_home, container, false);
+        View view = inflater.inflate(R.layout.frag_home, container, false);
+        ListProductHomePage = view.findViewById(R.id.gridProductHomePage);
+        ArrayList<Product> productListHomePage = new ArrayList<>(productArrayList.subList(0, 3));
+        adapterGrid = new ProductShowInDetailAdapter(getContext(), productListHomePage);
+        ListProductHomePage.setAdapter(adapterGrid);
+        return view;
     }
 }
