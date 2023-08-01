@@ -145,6 +145,7 @@ public class ProductPage extends Fragment {
     private void showProduct() {
         ArrayList<Product> productList = getAllProduct();
         adapterGrid = new ProductShowInDetailAdapter(getContext(), productList);
+        System.out.println(adapterGrid);
         gridShowProduct.setAdapter(adapterGrid);
     }
 }

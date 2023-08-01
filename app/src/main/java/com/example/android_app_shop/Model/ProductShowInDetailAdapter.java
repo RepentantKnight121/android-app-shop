@@ -26,7 +26,7 @@ public class ProductShowInDetailAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return Math.min(productList.size(), 4);
+        return productList.size();
     }
 
     @Override
