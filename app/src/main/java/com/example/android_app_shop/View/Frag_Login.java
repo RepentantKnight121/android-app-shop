@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.android_app_shop.Controller.AccountHandler;
-import com.example.android_app_shop.Controller.LoginManager;
 import com.example.android_app_shop.Controller.ProductHandlder;
 import com.example.android_app_shop.Model.Account;
 import com.example.android_app_shop.R;
