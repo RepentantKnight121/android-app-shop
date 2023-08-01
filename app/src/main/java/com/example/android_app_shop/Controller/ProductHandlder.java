@@ -96,7 +96,6 @@ public class ProductHandlder extends SQLiteOpenHelper {
             product.setColor(cursor.getString(cursor.getColumnIndex(COLOR_COL)));
             product.setStorage(cursor.getInt(cursor.getColumnIndex(STORAGE_COL)));
             product.setPrice((float) cursor.getDouble(cursor.getColumnIndex(PRICE_COL)));
-//            product.setID_Category(cursor.getString(cursor.getColumnIndex(ID_CATEGORY_COL)));
             cursor.close();
         }
         db.close();
