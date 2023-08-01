@@ -1,9 +1,10 @@
 package com.example.android_app_shop.View;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -98,15 +99,22 @@ public class ProductPage extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Product product = (Product) adapterGrid.getItem(i);
                 int id = product.getID();
-                Intent intent = new Intent( getContext(), ProductDetails.class);
+                FragProductDetails frag_productDetails = new FragProductDetails();
                 Bundle bundle = new Bundle();
                 bundle.putInt("id", id);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                frag_productDetails.setArguments(bundle);
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                Fragment currentFragment = fragmentManager.findFragmentById(R.id.frameFragment);
+                if (currentFragment != null) {
+                    fragmentTransaction.hide(currentFragment);
+                }
+                fragmentTransaction.add(R.id.frameFragment, frag_productDetails);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
     }
-
     private ArrayList<Product> getAllProduct() {
         ArrayList<Product> productList = new ArrayList<>();
         for (Product pr : productHandlder.loadProduct()) {
